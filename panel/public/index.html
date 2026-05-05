@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang ="en">
     <head>
-        <meta charset=""UTF-8">
-        <meta name ="viewprt" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
         <title> Anemone Gateway</title>
     </head>
     <body>
+     <h1 style="font-family: 'Tahoma'; text-align: center;"> Login</h1> 
+     <br>
+     <form>
+        <label style="font-family:'Tahoma';">Username</label>
+        <input type="text" id="username">
+        <br>
+         <label style="font-family:'Tahoma';">Password</label>
+         <input type="password" id="password">
+         <br>
         
+         <input type="checkbox"><span style="font-family: Tahoma;"> Keep me logged in</span>
+         <br>
+         <button type="submit" id="login_button">Login</button>
+         <br>
+         <input type="reset">
+         <p style="font-size: small; font-family: Tahoma;">(The reset button clears the form, doesn't reset the server.) </p>
+         <button title="WARNING: Resetting your password will delete your minecraft server and all of its content, you will have to start all over again." style="color:red;">Forgot password?</button> 
+         
+         </form>
+        <script>
+        document.getElementById('login_button').addEventListener('click', function(e){
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({username, password})
+
+            })
+            .then(res => res.json())
+            .then(data => { alert(data.message);
+
+            });
+        });
+    </script>     
     </body>
+
 </html>

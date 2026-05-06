@@ -28,6 +28,7 @@
         <script>
         document.getElementById('login_button').addEventListener('click', function(e){
             e.preventDefault();
+            console.log('Button clicked');
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -40,7 +41,14 @@
 
             })
             .then(res => res.json())
-            .then(data => { alert(data.message);
+            .then(data => {
+                if(data.message==='Login successful, welcome.')
+            {
+                window.location.href = '/dashboard.html';
+            }
+            else {
+                alert(data.message);
+            }
 
             });
         });

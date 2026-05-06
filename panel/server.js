@@ -18,12 +18,12 @@ app.post('/login', (req, res) => {
 
     if(username==='admin' &&password ==='admin')
     {
-        res.json({message: "Login succesful, welcome."});}
+        res.json({message: "Login successful, welcome."});}
 
         else{
 
         
-            res.json({message: 'Incorrect credentials. Try again.'});
+            res.json({message:'Incorrect credentials. Try again.'});
         }
 
         });

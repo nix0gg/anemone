@@ -1,14 +1,65 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Anemone Dashboard</title>
-       <body>
-        <h1 style="font-family: Tahoma;"> Dashboard</h1>
-        <hr>
-        <p id="address"><div style="font-family:Tahoma;">Server IP: 192.168.X.XXX:XXXX </p>
-        <p id="status"><div style="font-family: Tahoma;">Status: <span style="font-family:Tahoma; color:tomato;">offline</span></div></p>
-        
-
-       </body> 
+        <title>Anemone Dashboard</title>
     </head>
+    <body>
+        <h1 style="font-family: Tahoma;">Dashboard</h1>
+        <hr>
+        <p id="address" style="font-family: Tahoma;">Server IP: 192.168.X.XXX:XXXX</p>
+        <p id="status" style="font-family: Tahoma;">Status: <span style="color: tomato;">Offline</span></p>
+
+        <a href="" title="Start server" id="server_start">
+            <img src="assets/875.ico" alt="">
+        </a>
+        <a title="Stop server" href="" id="server_stop">
+            <img src="assets/847.ico" alt="stop server">
+        </a>
+        <a title="Restart server" id="server_restart" href="">
+            <img src="assets/240.ico" alt="">
+        </a>
+         <script>
+        document.getElementById('server_start').addEventListener('click', function(e){
+            e.preventDefault();
+            fetch('/server/start', {
+                method: 'POST'
+            })
+            .then(res => res.json())
+            .then(data => alert(data.message));
+        });
+        document.getElementById('server_stop').addEventListener('click', function(e){
+            e.preventDefault();
+            fetch('/server/stop', {
+                method: 'POST'
+            })
+            .then(res => res.json())
+            .then(data => alert(data.message));
+        });
+        document.getElementById('server_restart').addEventListener('click', function(e) {
+            e.preventDefault();
+                fetch('/server/restart', {method: 'POST'})
+                .then(res => res.json())
+                .then(data => alert(data.message));
+            });
+
+            function checkStatus() {
+                fetch('/server/status')
+                .thne(res => res.json())
+                .then(data => {
+                    const statusSpan = document.querySelector('#status span');
+                    if(data.status=== 'online') {
+                        statusSpan.style.color = 'green';
+                        statusSpan.textContent = 'Online';
+                    }
+                    else {
+                        statusSpan.style.color ='tomato';
+                        statusSpan.textContent = 'Offline';
+                    }
+                });
+            }
+            checkStatus();
+            setInterval(checkStatus,5000);
+    </script>
+    </body>
+   
 </html>

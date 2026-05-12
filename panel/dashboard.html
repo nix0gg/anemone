@@ -42,21 +42,27 @@
                 .then(data => alert(data.message));
             });
 
-            function checkStatus() {
-                fetch('/server/status')
-                .thne(res => res.json())
-                .then(data => {
-                    const statusSpan = document.querySelector('#status span');
-                    if(data.status=== 'online') {
-                        statusSpan.style.color = 'green';
-                        statusSpan.textContent = 'Online';
-                    }
-                    else {
-                        statusSpan.style.color ='tomato';
-                        statusSpan.textContent = 'Offline';
-                    }
-                });
-            }
+           function checkStatus() {
+    fetch('/server/status')
+    .then(res => {
+        if (res.status === 401 || res.redirected) {
+            window.location.href = '/';
+            return null;
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (!data) return;
+        const statusSpan = document.querySelector('#status span');
+        if (data.status === 'online') {
+            statusSpan.style.color = 'green';
+            statusSpan.textContent = 'Online';
+        } else {
+            statusSpan.style.color = 'tomato';
+            statusSpan.textContent = 'Offline';
+        }
+    });
+}
             checkStatus();
             setInterval(checkStatus,5000);
     </script>
